@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arrow Direction</title>
+	<style type="text/css">
+		form {
+			display: grid;
+			grid-template-columns: auto 1fr auto;
+			grid-gap: 5px;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		
+		input[type="number"] {
+			padding: 5px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			text-align: center;
+		}
+
+		input[type="number"]::placeholder {
+			color: #ccc;
+		}
+
+		button[type="submit"], button[type="button"] {
+			padding: 5px 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #fff;
+			
+		}
+
+		button[type="submit"]:hover, button[type="button"]:hover {
+			background-color: lavender;
+			color: #fff;
+			border-color: #ccc;
+		}
+
+	
+        .arrow {
+			width: 0; 
+			height: 10; 
+			border-top: 20px solid transparent;
+			border-bottom: 20px solid transparent; 
+		}
+		.left {
+			border-right: 20px solid black;
+		}
+		.right {
+			border-left: 20px solid black;
+		}
+		.backward {
+			border-top: 20px solid black;
+		}
+		.forward {
+			border-bottom: 20px solid black;
+		}
+		form {
+			float: left;
+			margin-right: 20px;
+		}
+		.clear {
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<form method="post">
+		<label for="left">Left:</label>
+		<input type="number" id="left" name="left" min="1" max="100">
+		<button type="submit" onclick="showArrow('left')">Submit</button>
+		
+		<label for="right">Right:</label>
+		<input type="number" id="right" name="right" min="1" max="100">
+		<button type="submit" onclick="showArrow('right')">Submit</button>
+		
+		<label for="backward">Backward:</label>
+		<input type="number" id="backward" name="backward" min="1" max="100">
+		<button type="submit" onclick="showArrow('backward')">Submit</button>
+		
+		<label for="forward">Forward:</label>
+		<input type="number" id="forward" name="forward" min="1" max="100">
+		<button type="submit" onclick="showArrow('forward')">Submit</button>
+	</form>
+
+	<div id="arrow-container"></div>
+
+	<button type="button" class="clear" onclick="clearArrows()">Clear All</button>
+
+	<script type="text/javascript">
+		function showArrow(direction) {
+			var distance = document.getElementById(direction).value;
+			var arrow = document.createElement("div");
+			arrow.classList.add("arrow", direction);
+			arrow.style.borderTopWidth = distance + "px";
+			arrow.style.borderBottomWidth = distance + "px";
+			document.getElementById("arrow-container").appendChild(arrow);
+		}
+
+		function clearArrows() {
+			var arrowContainer = document.getElementById("arrow-container");
+			while (arrowContainer.firstChild) {
+				arrowContainer.removeChild(arrowContainer.firstChild);
+			}
+		}
+	</script>
+    <?php
+	
+	$servername = "localhost";
+	$username = "username";
+	$password = "password";
+	$dbname = "direction";
+
+	
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$left = $_POST["left"];
+		$right = $_POST["right"];
+		$backward = $_POST["backward"];
+		$forward = $_POST["forward"];
+}
+
+    $sql = "INSERT INTO arrows (left_distance, right_distance, backward_distance, forward_distance) VALUES ('$left', '$right', '$backward', '$forward')";
+?>
+   
+    
+</body>
+</html>
+
